@@ -4,20 +4,30 @@
 
 void setup() {
   Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-#ifdef _DEBUG
-  Serial.println("Connecting");
-#endif
+  Serial.println();
+  Serial.print("Connecting to Wi-Fi: ");
+  Serial.println(WIFI_SSID);
   while(WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
-#ifdef _DEBUG
-  Serial.println("");
+  Serial.println();
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
-#endif
+  Serial.print("RSSI: ");
+  Serial.println(WiFi.RSSI());
+  Serial.print("DNS: ");
+  Serial.println(WiFi.dnsIP());
 }
 
 void loop() {
+  Serial.println();
+  Serial.println("Starting measurement");
+  int adc_val = analogRead(TANK_LEVEL);
+  float depth = (float)adc_val * (float)TANK_ADC_VALUE;
+  Serial.print("Depth");
+  Serial.println(depth);
+  delay(60000);
 }
