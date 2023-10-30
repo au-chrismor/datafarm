@@ -4,7 +4,7 @@
 
 void setup() {
   Serial.begin(115200);
-  WiFi.begin(ssid, password);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 #ifdef _DEBUG
   Serial.println("Connecting");
 #endif
