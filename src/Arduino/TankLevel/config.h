@@ -1,0 +1,3 @@
+SSID="WIFI"
+WIFI_PASSWORD="ShouldBeASecret"
+  
