@@ -1,6 +1,12 @@
 #include "config.h"
+#ifdef HAS_ESP32
 #include <WiFi.h>
 #include <HTTPClient.h>
+#endif
+#ifdef HAS_ESP8266
+#include <ESP8266WiFi.h>
+#endif
+
 
 void setup() {
   Serial.begin(115200);
@@ -11,7 +17,8 @@ void setup() {
   Serial.println(WIFI_SSID);
   while(WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
+    Serial.print("WiFi Status: ");
+    Serial.println(WiFi.status());
   }
   Serial.println();
   Serial.print("Connected to WiFi network with IP Address: ");
@@ -29,5 +36,38 @@ void loop() {
   float depth = (float)adc_val * (float)TANK_ADC_VALUE;
   Serial.print("Depth");
   Serial.println(depth);
+  String data = "{\"host\": \"tankmonitor1\",";
+  data += "\"sourcetype\": \"datafarm\",";
+  data += "\"index\": \"datafarm\",";
+  data += "\"event\": {";
+  data += "\"sensortype\": \"tankdepth\",";
+  data += "\"depth\": \"" + String(depth) + "\"";
+  data += "}}";
+
+  Serial.print("Connecting to: ");
+  Serial.print(SPLUNK_HOST);
+  Serial.print(":");
+  Serial.println(SPLUNK_PORT);
+  WiFiClient client;
+  if(client.connect(SPLUNK_HOST, SPLUNK_PORT)) {
+    Serial.println("Connected");
+    String url = "/services/collector";
+    client.println("POST " + url + " HTTP/1.1");
+    client.println(SPLUNK_TOKEN);
+    client.print("Content-Length: ");
+    client.println(data.length());
+    client.println();
+    client.println(data);
+    client.println();
+    delay(100);
+    if(client.connected()) {
+      client.flush();
+      client.stop();
+    }
+  }
+  else {
+    Serial.println("Connect failed");
+  }
+
   delay(60000);
 }
