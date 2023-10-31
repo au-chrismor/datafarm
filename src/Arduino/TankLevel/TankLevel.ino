@@ -51,7 +51,7 @@ void loop() {
   WiFiClient client;
   if(client.connect(SPLUNK_HOST, SPLUNK_PORT)) {
     Serial.println("Connected");
-    String url = "/services/collector";
+    String url = "/services/collector/event";
     client.println("POST " + url + " HTTP/1.1");
     client.println(SPLUNK_TOKEN);
     client.print("Content-Length: ");
