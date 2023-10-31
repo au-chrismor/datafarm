@@ -33,15 +33,12 @@ void loop() {
   Serial.println();
   Serial.println("Starting measurement");
   int adc_val = analogRead(TANK_LEVEL);
-  float depth = (float)adc_val * (float)TANK_ADC_VALUE;
-  Serial.print("Depth");
-  Serial.println(depth);
   String data = "{\"host\": \"tankmonitor1\",";
   data += "\"sourcetype\": \"datafarm\",";
   data += "\"index\": \"datafarm\",";
   data += "\"event\": {";
   data += "\"sensortype\": \"tankdepth\",";
-  data += "\"depth\": \"" + String(depth) + "\"";
+  data += "\"depth\": \"" + String(adc_val) + "\"";
   data += "}}";
 
   Serial.print("Connecting to: ");
@@ -51,7 +48,7 @@ void loop() {
   WiFiClient client;
   if(client.connect(SPLUNK_HOST, SPLUNK_PORT)) {
     Serial.println("Connected");
-    String url = "/services/collector";
+    String url = "/services/collector/event";
     client.println("POST " + url + " HTTP/1.1");
     client.println(SPLUNK_TOKEN);
     client.print("Content-Length: ");
