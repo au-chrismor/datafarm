@@ -7,6 +7,12 @@
 #include <ESP8266WiFi.h>
 #endif
 
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+OneWire oneWire(DALLAS_PIN);
+DallasTemperature temp_sense(&oneWire);
+
 
 void setup() {
   Serial.begin(115200);
@@ -29,18 +35,23 @@ void setup() {
   Serial.println(WiFi.RSSI());
   Serial.print("DNS: ");
   Serial.println(WiFi.dnsIP());
+  Serial.println("Sensor Start");
+  temp_sense.begin();
 }
 
 void loop() {
   Serial.println();
   Serial.println("Starting measurement");
   float temperature = -274;
+  
+  temperature = temp_sense.getTempCByIndex(0);
   int adc_val = analogRead(TANK_LEVEL);
-  String data = "{\"host\": \"" + String(HOST_NAME) + "\"";
-  data += "\"sourcetype\": \"" + String(SOURCE_TYPE) + "\"";
-  data += "\"index\": \"" + String(INDEX_NAME) + "\"";
+  
+  String data = "{\"host\": \"" + String(HOST_NAME) + "\",";
+  data += "\"sourcetype\": \"" + String(SOURCE_TYPE) + "\",";
+  data += "\"index\": \"" + String(INDEX_NAME) + "\",";
   data += "\"event\": {";
-  data += "\"sensortype\": \"" + String(SENSOR_TYPE) + "\"";
+  data += "\"sensortype\": \"" + String(SENSOR_TYPE) + "\",";
   data += "\"depth\": \"" + String(adc_val) + "\",";
   data += "\"temperature\": \"" + String(temperature) + "\"";
   data += "}}";
