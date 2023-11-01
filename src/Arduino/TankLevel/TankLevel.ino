@@ -23,6 +23,8 @@ void setup() {
   Serial.println();
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
+  Serial.print("Local Address: ");
+  Serial.println(WiFi.macAddress());
   Serial.print("RSSI: ");
   Serial.println(WiFi.RSSI());
   Serial.print("DNS: ");
@@ -32,13 +34,15 @@ void setup() {
 void loop() {
   Serial.println();
   Serial.println("Starting measurement");
+  float temperature = -274;
   int adc_val = analogRead(TANK_LEVEL);
-  String data = "{\"host\": \"tankmonitor1\",";
-  data += "\"sourcetype\": \"datafarm\",";
-  data += "\"index\": \"datafarm\",";
+  String data = "{\"host\": \"" + String(HOST_NAME) + "\"";
+  data += "\"sourcetype\": \"" + String(SOURCE_TYPE) + "\"";
+  data += "\"index\": \"" + String(INDEX_NAME) + "\"";
   data += "\"event\": {";
-  data += "\"sensortype\": \"tankdepth\",";
-  data += "\"depth\": \"" + String(adc_val) + "\"";
+  data += "\"sensortype\": \"" + String(SENSOR_TYPE) + "\"";
+  data += "\"depth\": \"" + String(adc_val) + "\",";
+  data += "\"temperature\": \"" + String(temperature) + "\"";
   data += "}}";
 
   Serial.print("Connecting to: ");
