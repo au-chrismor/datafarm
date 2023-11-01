@@ -7,6 +7,7 @@
 #define _DEBUG
 #define TANK_LEVEL      36
 #define TANK_ADC_VALUE  0.001611328125  // 2 * Vmax / ADC_Resolution)
+#define DALLAS_PIN      4
 const char* WIFI_SSID = "WIFI";
 const char* WIFI_PASSWORD = "ShouldBeASecret";
 const char* SPLUNK_HOST = "splunk";
