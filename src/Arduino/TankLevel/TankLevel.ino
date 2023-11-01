@@ -47,11 +47,11 @@ void loop() {
   temperature = temp_sense.getTempCByIndex(0);
   int adc_val = analogRead(TANK_LEVEL);
   
-  String data = "{\"host\": \"" + String(HOST_NAME) + "\"";
-  data += "\"sourcetype\": \"" + String(SOURCE_TYPE) + "\"";
-  data += "\"index\": \"" + String(INDEX_NAME) + "\"";
+  String data = "{\"host\": \"" + String(HOST_NAME) + "\",";
+  data += "\"sourcetype\": \"" + String(SOURCE_TYPE) + "\",";
+  data += "\"index\": \"" + String(INDEX_NAME) + "\",";
   data += "\"event\": {";
-  data += "\"sensortype\": \"" + String(SENSOR_TYPE) + "\"";
+  data += "\"sensortype\": \"" + String(SENSOR_TYPE) + "\",";
   data += "\"depth\": \"" + String(adc_val) + "\",";
   data += "\"temperature\": \"" + String(temperature) + "\"";
   data += "}}";
