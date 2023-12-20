@@ -52,10 +52,12 @@ All the data from sensors is intended to go into Splunk, so it's useful to have 
 Valid types for sensortype:
 
 * tankdepth
+* temperature
 * soilmoisture
 * environment
 * acpower
 * dcpower
+* weather
 
 ### sensortype = tankdepth
 
@@ -67,11 +69,25 @@ An integer value of the ADC output
 
 A float value from the DS18B20 device.  If device is not used, set this field to "-274" (which is impossible, so we know to disregard it)
 
+#### battery
+
+An integer value of the ADC output.  If this input is not used, set this field to "-1"
+
 ### sensortype = soilmoisture
 
 #### moisture
 
 An integer value of the ADC output
+
+#### battery
+
+An integer value of the ADC output.  If this input is not used, set this field to "-1"
+
+### sensortype = temperature
+
+#### temperature
+
+An float value of the DS18B20
 
 #### battery
 
@@ -114,6 +130,44 @@ An integer value of the ADC output
 #### current
 
 An integer value of the ADC output
+
+### sensortype = weather
+
+#### windspeed
+
+An integer value of wind speed in m/s
+
+#### winddir
+
+An integer value of the ADC output
+
+#### rainfall
+
+An integer value of the number of pulses on the raingauge since midnight
+
+#### uv
+
+An integer value of the ADC output
+
+#### lightlevel
+
+An integer value of the ADC output
+
+#### temperature
+
+A float value from the BME280.  In my code this is Centigrade, change to Farenheight if you prefer
+
+#### humidity
+
+A float value from the BME280.  Measurement in %RH
+
+#### pressure
+
+A float value from the BME280.  Measurement in kPa
+
+#### battery
+
+An integer value of the ADC output.  If this input is not used, set this field to "-1"
 
 Feel free to add other sensortypes and generate a PR
 
