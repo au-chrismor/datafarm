@@ -51,7 +51,7 @@ void loop() {
 
   WiFiClient client;
   Serial.print("Connecting to ");
-  Serial.println(host);
+  Serial.println(host);x`
   if (client.connect(host, port)) {
     Serial.println("Connected");
     String url = "/services/collector/event";
