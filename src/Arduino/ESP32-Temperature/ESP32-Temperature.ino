@@ -39,8 +39,9 @@ void loop() {
   data += "\"sourcetype\": \"datafarm\",";
   data += "\"index\": \"datafarm\",";
   data += "\"event\": {";
-  data += "\"sensortype\": \"environment\",";
+  data += "\"sensortype\": \"temperature\",";
   data += "\"temperature\": \"" + String(sensors.getTempCByIndex(0)) + "\",";
+  data += "\"battery\": \"-1\"";
   data += "}}";
 
   WiFiClient client;
