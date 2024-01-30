@@ -41,7 +41,7 @@ void loop() {
   data += "\"event\": {";
   data += "\"sensortype\": \"soilmoisture\",";
   data += "\"moisture\": \"" + String(analogRead(SOIL_PIN)) + "\",";
-  data += "\"battery\": \""+ String(analogRead(BATTERY_PIN)) + \"";
+  data += "\"battery\": \"" + String(analogRead(BATTERY_PIN)) + "\"";
   data += "}}";
 
   WiFiClient client;
