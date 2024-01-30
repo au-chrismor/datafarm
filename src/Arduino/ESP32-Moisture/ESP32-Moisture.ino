@@ -1,15 +1,16 @@
 #include "config.h"
 #include <WiFi.h>
 #include <WiFiMulti.h>
-#include <Wire.h>
-#include <BME280I2C.h>
 
 WiFiMulti WiFiMulti;
-BME280I2C bme;
+
 
 void setup() {
   Serial.begin(115200);
   Serial.println("Starting");
+
+  // Set up a GPIO pin for powering the sensor
+  pinMode(SOIL_POWER, OUTPUT);
 
   // Initialise the WiFi Connection
   WiFiMulti.addAP(STASSID, STAPSK);
@@ -27,31 +28,25 @@ void setup() {
 
     delay(500);
 
-  // Initialise the BME280BME280::PresUnit presUnit(BME280::PresUnit_Pa);
-  Serial.println("BME280 Startup");
-  Wire.begin();
-  while(!bme.begin()) {
-    Serial.println("Looking for BME280");
-    delay(1000);
-  }
-  BME280::TempUnit tempUnit(BME280::TempUnit_Celsius);
-  BME280::PresUnit presUnit(BME280::PresUnit_Pa);
 }
 
 void loop() {
-  String data = "{\"host\": \"environment1\",";
+  // Power up the sensor
+  digitalWrite(SOIL_POWER, HIGH);
+  delay(1000);    // Wait for it to stabilise
+
+  String data = "{\"host\": \"soilmoisture1\",";
   data += "\"sourcetype\": \"datafarm\",";
   data += "\"index\": \"datafarm\",";
   data += "\"event\": {";
-  data += "\"sensortype\": \"environment\",";
-  data += "\"temperature\": \"" + String(bme.temp()) + "\",";
-  data += "\"humidity\": \"" + String(bme.pres()) + "\",";
-  data += "\"pressure\": \"" + String(bme.hum()) + "\"";
+  data += "\"sensortype\": \"soilmoisture\",";
+  data += "\"moisture\": \"" + String(analogRead(SOIL_PIN)) + "\",";
+  data += "\"battery\": \"" + String(analogRead(BATTERY_PIN)) + "\"";
   data += "}}";
 
   WiFiClient client;
   Serial.print("Connecting to ");
-  Serial.println(host);x`
+  Serial.println(host);
   if (client.connect(host, port)) {
     Serial.println("Connected");
     String url = "/services/collector/event";
@@ -71,5 +66,8 @@ void loop() {
   else {
     Serial.println("Connect failed");
   }
-  delay(1000 * 60);
+  
+  digitalWrite(SOIL_POWER, LOW);  // Sensor shutdown
+
+  delay(1000 * 59);
 }
