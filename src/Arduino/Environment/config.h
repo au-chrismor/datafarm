@@ -17,4 +17,4 @@ const char* INDEX_NAME = "datafarm";
 const char* HOST_NAME = "environment";
 const char* SENSOR_TYPE = "environment";
 const char* SOURCE_TYPE = "datafarm";
-const char* SPLUNK_TOKEN = "Authorization: Splunk 01234567-89ab-def0-1234-56789abcdef0";
+const char* SPLUNK_TOKEN = "Authorization: Splunk";
