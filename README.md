@@ -60,7 +60,6 @@ Valid types for sensortype:
 * acpower
 * dcpower
 * weather
-* thermistor
 * location
 
 ### sensortype = tankdepth
@@ -91,7 +90,8 @@ An integer value of the ADC output.  If this input is not used, set this field t
 
 #### temperature
 
-An float value of the DS18B20
+A float value of the DS18B20
+Alternatively, this might be a thermistor.  The dashboards don't care, it's just a sensor selection.
 
 #### battery
 

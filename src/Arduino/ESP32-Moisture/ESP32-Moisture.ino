@@ -35,11 +35,13 @@ void loop() {
   digitalWrite(SOIL_POWER, HIGH);
   delay(1000);    // Wait for it to stabilise
 
-  String data = "{\"host\": \"soilmoisture1\",";
+  String data = "{\"host\": \"";
+  data += deviceName;
   data += "\"sourcetype\": \"datafarm\",";
   data += "\"index\": \"datafarm\",";
   data += "\"event\": {";
-  data += "\"sensortype\": \"soilmoisture\",";
+  data += "\"sensortype\": \"";
+  data += sensorType;
   data += "\"moisture\": \"" + String(analogRead(SOIL_PIN)) + "\",";
   data += "\"battery\": \"" + String(analogRead(BATTERY_PIN)) + "\"";
   data += "}}";
