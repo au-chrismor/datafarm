@@ -28,11 +28,13 @@ void setup() {
 }
 
 void loop() {
-  String data = "{\"host\": \"battery1\",";
+  String data = "{\"host\": \"";
+  data += deviceName;
   data += "\"sourcetype\": \"datafarm\",";
   data += "\"index\": \"datafarm\",";
   data += "\"event\": {";
-  data += "\"sensortype\": \"dcpower\",";
+  data += "\"sensortype\": \"";
+  data += sensorType;
   data += "\"voltage\": \"" + String(analogRead(VOLT_PIN)) + "\",";
   data += "\"current\": \"" + String(analogRead(AMP_PIN)) + "\",";
   data += "\"battery\": \"-1\"";

@@ -35,11 +35,13 @@ void setup() {
 
 void loop() {
   sensors.requestTemperatures();
-  String data = "{\"host\": \"temperature1\",";
+  String data = "{\"host\": \"";
+  data += deviceName;
   data += "\"sourcetype\": \"datafarm\",";
   data += "\"index\": \"datafarm\",";
   data += "\"event\": {";
-  data += "\"sensortype\": \"temperature\",";
+  data += "\"sensortype\": \"";
+  data += sensorType;
   data += "\"temperature\": \"" + String(sensors.getTempCByIndex(0)) + "\",";
   data += "\"battery\": \"-1\"";
   data += "}}";

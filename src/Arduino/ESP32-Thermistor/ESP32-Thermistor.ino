@@ -38,11 +38,13 @@ void loop() {
 
   temperature = thermistor.read();
 
-  String data = "{\"host\": \"reclaim1\",";
+  String data = "{\"host\": \"";
+  data += deviceName;
   data += "\"sourcetype\": \"datafarm\",";
   data += "\"index\": \"datafarm\",";
   data += "\"event\": {";
-  data += "\"sensortype\": \"temperature\",";
+  data += "\"sensortype\": \"";
+  data += sensorType;
   data += "\"temperature\": \"" + String(temperature/10) + "\",";
   data += "\"battery\": \"-1\"";
   data += "}}";

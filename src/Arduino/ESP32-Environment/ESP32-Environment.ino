@@ -39,11 +39,13 @@ void setup() {
 }
 
 void loop() {
-  String data = "{\"host\": \"environment1\",";
+  String data = "{\"host\": \"";
+  data += deviceName;
   data += "\"sourcetype\": \"datafarm\",";
   data += "\"index\": \"datafarm\",";
   data += "\"event\": {";
-  data += "\"sensortype\": \"environment\",";
+  data += "\"sensortype\": \"";
+  data += sensorType;
   data += "\"temperature\": \"" + String(bme.temp()) + "\",";
   data += "\"humidity\": \"" + String(bme.pres()) + "\",";
   data += "\"pressure\": \"" + String(bme.hum()) + "\"";
