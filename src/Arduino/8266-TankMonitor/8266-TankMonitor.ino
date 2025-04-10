@@ -45,11 +45,13 @@ void loop() {
   Serial.println(analog_0);
   Serial.print("Depth: ");
   Serial.println(level);
-  String data = "{\"host\": \"tankmonitor1\",";
+  String data = "{\"host\": \"";
+  data += deviceName;
   data += "\"sourcetype\": \"datafarm\",";
   data += "\"index\": \"datafarm\",";
   data += "\"event\": {";
-  data += "\"sensortype\": \"tankdepth\",";
+  data += "\"sensortype\": \"";
+  data += sensorType;
   data += "\"level\": \"" + String(analog_0) + "\"";
   data += "}}";
   Serial.print("Connecting to: ");
