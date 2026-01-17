@@ -47,8 +47,8 @@ void loop() {
   data += "\"sensortype\": \"";
   data += sensorType;
   data += "\"temperature\": \"" + String(bme.temp()) + "\",";
-  data += "\"humidity\": \"" + String(bme.pres()) + "\",";
-  data += "\"pressure\": \"" + String(bme.hum()) + "\"";
+  data += "\"humidity\": \"" + String(bme.hum()) + "\",";
+  data += "\"pressure\": \"" + String(bme.pres()) + "\"";
   data += "}}";
 
   WiFiClient client;
